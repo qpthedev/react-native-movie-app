@@ -5,6 +5,8 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset } from "expo-asset";
 import { loadAsync } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import Tabs from "./navigation/Tabs";
 
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
@@ -37,5 +39,9 @@ export default function App() {
     );
   }
 
-  return <Text>Done Loading</Text>;
+  return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  );
 }
