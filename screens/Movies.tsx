@@ -1,9 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
 import { View, Text, StyleSheet } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-const Movies = () => (
-  <Btn>
+const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = ({
+  navigation: { navigate },
+}) => (
+  <Btn onPress={() => navigate("Stack", { screen: "Three" })}>
     <Title>Movies</Title>
   </Btn>
 );
