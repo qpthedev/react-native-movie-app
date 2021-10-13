@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Swiper from "react-native-web-swiper";
 import { ActivityIndicator, Dimensions } from "react-native";
 import Slide from "../components/Slide";
+import Poster from "../components/Poster";
 
 const API_KEY = "";
 
@@ -17,6 +18,32 @@ const Loader = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+`;
+
+const ListTitle = styled.Text`
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 30px;
+`;
+
+const Movie = styled.View`
+  margin-right: 10px;
+  align-items: center;
+`;
+
+const TrendingScroll = styled.ScrollView`
+  margin-top: 20px;
+`;
+
+const Title = styled.Text`
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+const Votes = styled.Text`
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 10px;
 `;
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -76,7 +103,11 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
         loop={true}
         timeout={3}
         controlsEnabled={false}
-        containerStyle={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT * 0.25 }}
+        containerStyle={{
+          width: SCREEN_WIDTH,
+          height: SCREEN_HEIGHT * 0.25,
+          marginBottom: 30,
+        }}
       >
         {nowPlaying.map((movie) => (
           <Slide
@@ -89,6 +120,23 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
           />
         ))}
       </Swiper>
+      <ListTitle>Trending</ListTitle>
+      <TrendingScroll
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingLeft: 30 }}
+      >
+        {trending.map((movie) => (
+          <Movie key={movie.id}>
+            <Poster path={movie.poster_path} />
+            <Title>
+              {movie.title.slice(0, 13)}
+              {movie.title.length > 13 ? "..." : null}
+            </Title>
+            <Votes>⭐{movie.vote_average}/10</Votes>
+          </Movie>
+        ))}
+      </TrendingScroll>
     </Container>
   );
 };
