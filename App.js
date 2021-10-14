@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppLoading from "expo-app-loading";
-import { Image, Text, useColorScheme } from "react-native";
+import { Image, LogBox, useColorScheme } from "react-native";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset } from "expo-asset";
-import { loadAsync } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 import { ThemeProvider } from "styled-components/native";
 import { darkTheme, lightTheme } from "./styled";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 
@@ -33,6 +35,11 @@ export default function App() {
 
   const isDark = useColorScheme() === "dark";
 
+  // TODO: Fix This
+  useEffect(() => {
+    LogBox.ignoreLogs(["Setting a timer"]);
+  }, []);
+
   if (!ready) {
     return (
       <AppLoading
@@ -44,10 +51,12 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
