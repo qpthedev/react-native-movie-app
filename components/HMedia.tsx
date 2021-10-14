@@ -5,7 +5,6 @@ import Votes from "./Votes";
 
 const HMovie = styled.View`
   padding: 0px 30px;
-  margin-bottom: 30px;
   flex-direction: row;
 `;
 
@@ -38,8 +37,8 @@ interface HMediaProps {
   poster_path: string;
   title: string;
   overview: string;
-  release_date: string;
-  vote_average: number;
+  release_date?: string;
+  vote_average?: number;
 }
 
 const HMedia: React.FC<HMediaProps> = ({
