@@ -25,10 +25,11 @@ const VMedia: React.FC<VMediaProps> = ({
   vote_average,
 }) => (
   <Movie>
-    <Poster path={poster_path} />
+    <Poster path={poster_path || ""} />
     <Title>
-      {title.slice(0, 12)}
-      {title.length > 12 ? "..." : null}
+      {/* {title.slice(0, 12)} */}
+      {/* {title.length > 12 ? "..." : null} */}
+      {title.length > 12 ? `${title.slice(0, 12)}...` : title}
     </Title>
     <Votes votes={vote_average} />
   </Movie>
