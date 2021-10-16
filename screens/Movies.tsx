@@ -8,12 +8,8 @@ import HMedia from "../components/HMedia";
 import VMedia from "../components/VMedia";
 import { useQuery, useQueryClient } from "react-query";
 import { MovieResponse, moviesAPI } from "../api";
-
-const Loader = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
+import Loader from "../components/Loader";
+import HList from "../components/HList";
 
 const ListTitle = styled.Text`
   color: black;
@@ -91,9 +87,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
     isRefetchingNowPlaying || isRefetchingUpcoming || isRefetchingTrending;
 
   return loading ? (
-    <Loader>
-      <ActivityIndicator size="large" color="red" />
-    </Loader>
+    <Loader />
   ) : upcomingData ? (
     <FlatList
       onRefresh={onRefresh}
@@ -121,21 +115,9 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
               />
             ))}
           </Swiper>
-          <ListContainer>
-            <ListTitle>Trending</ListTitle>
-
-            {trendingData ? (
-              <TrendingScroll
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ paddingHorizontal: 30 }}
-                ItemSeparatorComponent={VSeparator}
-                data={trendingData.results}
-                keyExtractor={movieKeyExtractor}
-                renderItem={renderVMedia}
-              />
-            ) : null}
-          </ListContainer>
+          {trendingData ? (
+            <HList title="Trending Movies" data={trendingData.results} />
+          ) : null}
           <ComingSoonTitle>Coming Soon</ComingSoonTitle>
         </>
       }
