@@ -43,4 +43,17 @@ export const moviesAPI = {
     ).then((res) => res.json()),
 };
 
-export const tvAPI = {};
+export const tvAPI = {
+  trending: () =>
+    fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}`).then((res) =>
+      res.json()
+    ),
+  airingToday: () =>
+    fetch(
+      `${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1&region=US`
+    ).then((res) => res.json()),
+  topRated: () =>
+    fetch(
+      `${BASE_URL}/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1&region=US`
+    ).then((res) => res.json()),
+};
