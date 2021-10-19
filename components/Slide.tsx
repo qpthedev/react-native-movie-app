@@ -1,6 +1,7 @@
+import { useNavigation } from "@react-navigation/core";
 import { BlurView } from "expo-blur";
 import React from "react";
-import { StyleSheet, useColorScheme, View } from "react-native";
+import { Pressable, StyleSheet, useColorScheme, View } from "react-native";
 import styled from "styled-components/native";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
@@ -53,29 +54,37 @@ const Slide: React.FC<SlideProps> = ({
   title,
 }) => {
   const isDark = useColorScheme() === "dark";
+
+  const navigation = useNavigation();
+  const goDetail = () => {
+    navigation.navigate("Stacks", { screen: "Detail" });
+  };
+
   return (
-    <View style={{ flex: 1 }}>
-      <BgImg
-        source={{ uri: makeImgPath(backdrop_path) }}
-        style={StyleSheet.absoluteFill}
-      />
-      <BlurView
-        style={StyleSheet.absoluteFill}
-        intensity={80}
-        tint={isDark ? "dark" : "light"}
-      >
-        <Wrapper>
-          <Poster path={poster_path} />
-          <Column>
-            <Title isDark={isDark}>{title}</Title>
-            {vote_average > 0 ? (
-              <Votes isDark={isDark}>⭐{vote_average} / 10</Votes>
-            ) : null}
-            <Overview isDark={isDark}>{overview.slice(0, 85)}...</Overview>
-          </Column>
-        </Wrapper>
-      </BlurView>
-    </View>
+    <Pressable onPress={goDetail} style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <BgImg
+          source={{ uri: makeImgPath(backdrop_path) }}
+          style={StyleSheet.absoluteFill}
+        />
+        <BlurView
+          style={StyleSheet.absoluteFill}
+          intensity={80}
+          tint={isDark ? "dark" : "light"}
+        >
+          <Wrapper>
+            <Poster path={poster_path} />
+            <Column>
+              <Title isDark={isDark}>{title}</Title>
+              {vote_average > 0 ? (
+                <Votes isDark={isDark}>⭐{vote_average} / 10</Votes>
+              ) : null}
+              <Overview isDark={isDark}>{overview.slice(0, 85)}...</Overview>
+            </Column>
+          </Wrapper>
+        </BlurView>
+      </View>
+    </Pressable>
   );
 };
 

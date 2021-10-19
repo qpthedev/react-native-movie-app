@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { Pressable } from "react-native";
 import styled from "styled-components/native";
 import Poster from "./Poster";
 import Votes from "./Votes";
@@ -48,23 +50,32 @@ const HMedia: React.FC<HMediaProps> = ({
   release_date,
   vote_average,
 }) => {
-  return (
-    <HMovie>
-      <Poster path={poster_path} />
-      <HColumn>
-        <Title>{title.length > 30 ? `${title.slice(0, 30)}...` : title}</Title>
+  const navigation = useNavigation();
+  const goDetail = () => {
+    navigation.navigate("Stacks", { screen: "Detail" });
+  };
 
-        {release_date ? (
-          <Release>{new Date(release_date).toLocaleDateString()}</Release>
-        ) : null}
-        {vote_average ? <Votes votes={vote_average} /> : null}
-        <Overview>
-          {overview !== "" && overview.length > 140
-            ? `${overview.slice(0, 140)}...`
-            : overview}
-        </Overview>
-      </HColumn>
-    </HMovie>
+  return (
+    <Pressable onPress={goDetail}>
+      <HMovie>
+        <Poster path={poster_path} />
+        <HColumn>
+          <Title>
+            {title.length > 30 ? `${title.slice(0, 30)}...` : title}
+          </Title>
+
+          {release_date ? (
+            <Release>{new Date(release_date).toLocaleDateString()}</Release>
+          ) : null}
+          {vote_average ? <Votes votes={vote_average} /> : null}
+          <Overview>
+            {overview !== "" && overview.length > 140
+              ? `${overview.slice(0, 140)}...`
+              : overview}
+          </Overview>
+        </HColumn>
+      </HMovie>
+    </Pressable>
   );
 };
 

@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
+import { Pressable } from "react-native";
 import styled from "styled-components/native";
 import Poster from "./Poster";
 import Votes from "./Votes";
@@ -23,16 +25,21 @@ const VMedia: React.FC<VMediaProps> = ({
   poster_path,
   title,
   vote_average,
-}) => (
-  <Movie>
-    <Poster path={poster_path || ""} />
-    <Title>
-      {/* {title.slice(0, 12)} */}
-      {/* {title.length > 12 ? "..." : null} */}
-      {title.length > 12 ? `${title.slice(0, 12)}...` : title}
-    </Title>
-    <Votes votes={vote_average} />
-  </Movie>
-);
+}) => {
+  const navigation = useNavigation();
+  const goDetail = () => {
+    navigation.navigate("Stacks", { screen: "Detail" });
+  };
+
+  return (
+    <Pressable onPress={goDetail}>
+      <Movie>
+        <Poster path={poster_path || ""} />
+        <Title>{title.length > 12 ? `${title.slice(0, 12)}...` : title}</Title>
+        <Votes votes={vote_average} />
+      </Movie>
+    </Pressable>
+  );
+};
 
 export default VMedia;

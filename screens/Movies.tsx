@@ -18,20 +18,8 @@ const ListTitle = styled.Text`
   margin-left: 30px;
 `;
 
-const TrendingScroll = styled.FlatList`
-  margin-top: 20px;
-`;
-
-const ListContainer = styled.View`
-  margin-bottom: 30px;
-`;
-
 const ComingSoonTitle = styled(ListTitle)`
-  margin-bottom: 30px;
-`;
-
-const VSeparator = styled.View`
-  width: 20px;
+  margin-bottom: 10px;
 `;
 
 const HSeparator = styled.View`
@@ -94,7 +82,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
             containerStyle={{
               width: SCREEN_WIDTH,
               height: SCREEN_HEIGHT * 0.25,
-              marginBottom: 30,
+              marginBottom: 10,
             }}
           >
             {nowPlayingData?.results.map((movie) => (

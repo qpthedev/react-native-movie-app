@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import VMedia from "./VMedia";
 
 const ListContainer = styled.View`
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const ListTitle = styled.Text`
@@ -12,7 +12,7 @@ const ListTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
   margin-left: 30px;
-  margin-vertical: 20px;
+  margin-vertical: 5px;
 `;
 
 export const HListSeparator = styled.View`
