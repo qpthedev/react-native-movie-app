@@ -50,6 +50,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
       title={item.title}
       poster_path={item.poster_path}
       vote_average={item.vote_average}
+      fullData={item}
     />
   );
 
@@ -60,6 +61,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
       overview={item.overview}
       release_date={item.release_date}
       vote_average={item.vote_average}
+      fullData={item}
     />
   );
 
@@ -93,6 +95,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                 vote_average={movie.vote_average}
                 overview={movie.overview}
                 title={movie.title}
+                fullData={movie}
               />
             ))}
           </Swiper>

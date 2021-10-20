@@ -5,14 +5,16 @@ import Detail from "../screens/Detail";
 
 const Stack = createNativeStackNavigator();
 
-const Stacks = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerBackTitle: false,
-    }}
-  >
-    <Stack.Screen name="Detail" component={Detail} />
-  </Stack.Navigator>
-);
+const Stacks = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitle: false,
+      }}
+    >
+      <Stack.Screen name="Detail" component={Detail} />
+    </Stack.Navigator>
+  );
+};
 
 export default Stacks;

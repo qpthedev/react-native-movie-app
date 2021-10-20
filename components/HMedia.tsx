@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Pressable } from "react-native";
 import styled from "styled-components/native";
+import { Movie } from "../api";
 import Poster from "./Poster";
 import Votes from "./Votes";
 
@@ -24,7 +25,8 @@ const Overview = styled.Text`
 const Release = styled.Text`
   color: rgba(0, 0, 0, 0.8);
   font-size: 12px;
-  margin-vertical: 10px;
+  margin: 10px 0px;
+  /* margin-vertical: 10px; */
   font-weight: 500;
   opacity: 0.6;
 `;
@@ -41,6 +43,7 @@ interface HMediaProps {
   overview: string;
   release_date?: string;
   vote_average?: number;
+  fullData: Movie;
 }
 
 const HMedia: React.FC<HMediaProps> = ({
@@ -49,10 +52,17 @@ const HMedia: React.FC<HMediaProps> = ({
   overview,
   release_date,
   vote_average,
+  fullData,
 }) => {
   const navigation = useNavigation();
   const goDetail = () => {
-    navigation.navigate("Stacks", { screen: "Detail" });
+    // @ts-ignore
+    navigation.navigate("Stacks", {
+      screen: "Detail",
+      params: {
+        ...fullData,
+      },
+    });
   };
 
   return (

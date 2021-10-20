@@ -2,10 +2,11 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Pressable } from "react-native";
 import styled from "styled-components/native";
+import { Movie, TV } from "../api";
 import Poster from "./Poster";
 import Votes from "./Votes";
 
-const Movie = styled.View`
+const Container = styled.View`
   align-items: center;
 `;
 
@@ -19,25 +20,33 @@ interface VMediaProps {
   poster_path: string;
   title: string;
   vote_average: number;
+  fullData: Movie | TV;
 }
 
 const VMedia: React.FC<VMediaProps> = ({
   poster_path,
   title,
   vote_average,
+  fullData,
 }) => {
   const navigation = useNavigation();
   const goDetail = () => {
-    navigation.navigate("Stacks", { screen: "Detail" });
+    // @ts-ignore
+    navigation.navigate("Stacks", {
+      screen: "Detail",
+      params: {
+        ...fullData,
+      },
+    });
   };
 
   return (
     <Pressable onPress={goDetail}>
-      <Movie>
+      <Container>
         <Poster path={poster_path || ""} />
         <Title>{title.length > 12 ? `${title.slice(0, 12)}...` : title}</Title>
         <Votes votes={vote_average} />
-      </Movie>
+      </Container>
     </Pressable>
   );
 };
