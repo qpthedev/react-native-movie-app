@@ -1,11 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Linking, StyleSheet } from "react-native";
+import { useQuery } from "react-query";
 import styled from "styled-components/native";
-import { Movie, TV } from "../api";
+import { Movie, moviesAPI, TV, tvAPI } from "../api";
+import Loader from "../components/Loader";
 import Poster from "../components/Poster";
 import { makeImgPath } from "../utils";
+import { Ionicons } from "@expo/vector-icons";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -35,10 +38,26 @@ const Title = styled.Text`
   width: 80%;
 `;
 
+const Data = styled.View`
+  padding: 0px 20px;
+`;
+
 const Overview = styled.Text`
   color: ${(props) => props.theme.textColor};
-  margin-top: 30px;
+  margin: 20px 0px;
   padding: 0px 20px;
+`;
+
+const VideoBtn = styled.Pressable`
+  flex-direction: row;
+  margin-left: 20px;
+`;
+
+const BtnText = styled.Text`
+  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 25px;
+  margin-left: 5px;
 `;
 
 type RootStackParamList = {
@@ -51,6 +70,18 @@ const Detail: React.FC<DetailScreenProps> = ({
   navigation: { setOptions },
   route: { params },
 }) => {
+  const isMovie = "original_title" in params;
+
+  const { isLoading, data } = useQuery(
+    [isMovie ? "movies" : "tv", params.id],
+    isMovie ? moviesAPI.detail : tvAPI.detail
+  );
+
+  const openYTLink = async (videoID: string) => {
+    const baseUrl = `https://m.youtube.com/watch?v=${videoID}`;
+    await Linking.openURL(baseUrl);
+  };
+
   useEffect(() => {
     setOptions({
       title: "title" in params ? "Movie" : "TV Show",
@@ -74,6 +105,14 @@ const Detail: React.FC<DetailScreenProps> = ({
         </Column>
       </Header>
       <Overview>{params.overview}</Overview>
+      {isLoading ? <Loader /> : null}
+      {data?.videos?.results?.map((video) => (
+        <VideoBtn key={video.key} onPress={() => openYTLink(video.key)}>
+          <Ionicons name="logo-youtube" size={25} />
+          <BtnText>{video.name}</BtnText>
+        </VideoBtn>
+      ))}
+      <Data></Data>
     </Container>
   );
 };
