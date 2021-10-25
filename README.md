@@ -2,7 +2,7 @@
 
 Movie and TV Discovery App built with React Native
 
-## Topics Practiced
+### Topics Practiced
 
 - Create React Native App
 - Stack Navigation
