@@ -1,18 +1,20 @@
 import { useNavigation } from "@react-navigation/core";
 import { BlurView } from "expo-blur";
 import React from "react";
-import { Pressable, StyleSheet, useColorScheme, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import styled from "styled-components/native";
 import { Movie } from "../api";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
 
-const BgImg = styled.Image``;
+const BgImg = styled.Image`
+  opacity: 0.6;
+`;
 
-const Title = styled.Text<{ isDark: boolean }>`
+const Title = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: ${(props) => (props.isDark ? "white" : props.theme.textColor)};
+  color: rgba(30, 39, 46, 1);
 `;
 
 const Wrapper = styled.View`
@@ -29,10 +31,9 @@ const Column = styled.View`
   margin-left: 15px;
 `;
 
-const Overview = styled.Text<{ isDark: boolean }>`
+const Overview = styled.Text`
   margin-top: 10px;
-  color: ${(props) =>
-    props.isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)"};
+  color: rgba(30, 39, 46, 1);
 `;
 
 const Votes = styled(Overview)`
@@ -56,8 +57,6 @@ const Slide: React.FC<SlideProps> = ({
   title,
   fullData,
 }) => {
-  const isDark = useColorScheme() === "dark";
-
   const navigation = useNavigation();
   const goDetail = () => {
     // @ts-ignore
@@ -76,19 +75,13 @@ const Slide: React.FC<SlideProps> = ({
           source={{ uri: makeImgPath(backdrop_path) }}
           style={StyleSheet.absoluteFill}
         />
-        <BlurView
-          style={StyleSheet.absoluteFill}
-          intensity={80}
-          tint={isDark ? "dark" : "light"}
-        >
+        <BlurView style={StyleSheet.absoluteFill} intensity={80}>
           <Wrapper>
             <Poster path={poster_path} />
             <Column>
-              <Title isDark={isDark}>{title}</Title>
-              {vote_average > 0 ? (
-                <Votes isDark={isDark}>⭐{vote_average} / 10</Votes>
-              ) : null}
-              <Overview isDark={isDark}>{overview.slice(0, 85)}...</Overview>
+              <Title>{title}</Title>
+              {vote_average > 0 ? <Votes>⭐{vote_average} / 10</Votes> : null}
+              <Overview>{overview.slice(0, 85)}...</Overview>
             </Column>
           </Wrapper>
         </BlurView>

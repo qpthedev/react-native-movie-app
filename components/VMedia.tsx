@@ -11,6 +11,7 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
+  color: rgba(0, 0, 0, 0.8);
   font-weight: 600;
   margin-top: 7px;
   margin-bottom: 5px;

@@ -33,9 +33,6 @@ export default function App() {
     await Promise.all([...fonts, ...images]);
   };
 
-  const isDark = useColorScheme() === "dark";
-
-  // TODO: Fix This
   useEffect(() => {
     LogBox.ignoreLogs(["Setting a timer"]);
   }, []);
@@ -52,11 +49,9 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <NavigationContainer>
-          <Root />
-        </NavigationContainer>
-      </ThemeProvider>
+      <NavigationContainer>
+        <Root />
+      </NavigationContainer>
     </QueryClientProvider>
   );
 }

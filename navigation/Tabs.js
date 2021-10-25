@@ -10,25 +10,23 @@ import { kBLACK, kDARK_GRAY, kLIGHT_GRAY, kYELLOW } from "../colors";
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
-  const isDark = useColorScheme() === "dark";
-
   return (
     <Tab.Navigator
       sceneContainerStyle={{
-        backgroundColor: isDark ? kBLACK : "white",
+        backgroundColor: "white",
       }}
       screenOptions={{
         unmountOnBlur: true,
         tabBarStyle: {
-          backgroundColor: isDark ? kBLACK : "white",
+          backgroundColor: "white",
         },
-        tabBarActiveTintColor: isDark ? kYELLOW : kBLACK,
-        tabBarInactiveTintColor: isDark ? kDARK_GRAY : kLIGHT_GRAY,
+        tabBarActiveTintColor: kBLACK,
+        tabBarInactiveTintColor: kLIGHT_GRAY,
         headerStyle: {
-          backgroundColor: isDark ? kBLACK : "white",
+          backgroundColor: "white",
         },
         headerTitleStyle: {
-          color: isDark ? "white" : kBLACK,
+          color: kBLACK,
         },
         tabBarLabelStyle: {
           marginTop: -5,

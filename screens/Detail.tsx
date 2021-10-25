@@ -20,7 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const Container = styled.ScrollView`
-  background-color: ${(props) => props.theme.mainBgColor};
+  background-color: white;
 `;
 
 const Header = styled.View`
@@ -50,7 +50,7 @@ const Data = styled.View`
 `;
 
 const Overview = styled.Text`
-  color: ${(props) => props.theme.textColor};
+  color: rgba(30, 39, 46, 1);
   margin: 20px 0px;
   padding: 0px 20px;
 `;
@@ -61,6 +61,7 @@ const VideoBtn = styled.Pressable`
 `;
 
 const BtnText = styled.Text`
+  color: rgba(30, 39, 46, 1);
   font-weight: 600;
   margin-bottom: 10px;
   line-height: 25px;
