@@ -1,7 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect } from "react";
-import { Dimensions, Linking, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Linking,
+  Platform,
+  Pressable,
+  Share,
+  StyleSheet,
+} from "react-native";
 import { useQuery } from "react-query";
 import styled from "styled-components/native";
 import { Movie, moviesAPI, TV, tvAPI } from "../api";
@@ -70,6 +77,33 @@ const Detail: React.FC<DetailScreenProps> = ({
   navigation: { setOptions },
   route: { params },
 }) => {
+  const shareMedia = async () => {
+    const isAndroid = Platform.OS === "android";
+    const homepage = isMovie
+      ? `https://www.imdb.com/title/${data.imdb_id}`
+      : data.homepage;
+
+    if (isAndroid) {
+      await Share.share({
+        title: isMovie ? params.title : params.name,
+        message: homepage,
+      });
+    } else {
+      await Share.share({
+        title: isMovie ? params.title : params.name,
+        url: homepage,
+      });
+    }
+  };
+
+  const ShareButton = () => {
+    return (
+      <Pressable onPress={shareMedia}>
+        <Ionicons name="share-outline" size={25} />
+      </Pressable>
+    );
+  };
+
   const isMovie = "original_title" in params;
 
   const { isLoading, data } = useQuery(
@@ -87,6 +121,14 @@ const Detail: React.FC<DetailScreenProps> = ({
       title: "title" in params ? "Movie" : "TV Show",
     });
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setOptions({
+        headerRight: () => <ShareButton />,
+      });
+    }
+  }, [data]);
 
   return (
     <Container>
